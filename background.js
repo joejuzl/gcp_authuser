@@ -15,11 +15,14 @@ let user = 1;
 
 const redirectWithParam = (details) => {
     console.log('redirect', user);
-    const url = details.url;
-    if (!url.includes('authuser')) {
+    let url = details.url;
+    if (!url.includes('authuser=')) {
         const punctuation = url.includes('?') ? '&' : '?';
-        return {redirectUrl: details.url + punctuation + 'authuser=' + user};
+        url = url + punctuation + 'authuser=' + user
+    } else {
+        url = url.replace(/authuser=\d/, 'authuser=' + user)
     }
+    return {redirectUrl: url};
 };
 
 
